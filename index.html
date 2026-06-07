@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background:linear-gradient(
+-45deg,
+#ff006e,
+#8338ec,
+#3a86ff,
+#06d6a0,
+#ffbe0b
+);
+background-size:400% 400%;
+animation:bg 10s ease infinite;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+z-index:10;
+padding:20px;
+}
+
+.gift{
+font-size:120px;
+cursor:pointer;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+}
+
+h1{
+font-size:5rem;
+display:none;
+text-shadow:
+0 0 20px white,
+0 0 40px #ff0,
+0 0 60px #ff0;
+animation:zoom 1s ease;
+}
+
+@keyframes zoom{
+from{
+opacity:0;
+transform:scale(0);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+.message{
+display:none;
+font-size:24px;
+max-width:800px;
+margin-top:20px;
+line-height:1.6;
+animation:fadeIn 2s;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+}
+to{
+opacity:1;
+}
+}
+
+.balloon{
+position:absolute;
+bottom:-150px;
+font-size:60px;
+animation:float linear infinite;
+}
+
+@keyframes float{
+from{
+transform:translateY(0);
+}
+to{
+transform:translateY(-130vh);
+}
+}
+
+.heart{
+position:absolute;
+font-size:25px;
+animation:rise 8s linear infinite;
+}
+
+@keyframes rise{
+from{
+transform:translateY(100vh);
+opacity:1;
+}
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+.firework{
+position:absolute;
+width:8px;
+height:8px;
+border-radius:50%;
+background:white;
+animation:explode 1.2s linear forwards;
+}
+
+@keyframes explode{
+from{
+transform:scale(1);
+opacity:1;
+}
+to{
+transform:scale(18);
+opacity:0;
+}
+}
+
+.count{
+font-size:120px;
+font-weight:bold;
+display:none;
+text-shadow:0 0 30px white;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="gift" id="gift">
+🎁
+</div>
+
+<div class="count" id="count">3</div>
+
+<h1 id="wish">
+🎂 HAPPY BIRTHDAY 🎂
+</h1>
+
+<div class="message" id="msg">
+
+✨ Today is all about YOU ✨
+
+<br><br>
+
+May your day be filled with happiness,
+laughter, success and unforgettable memories.
+
+💖 Keep smiling.
+🌈 Keep shining.
+🚀 Keep achieving greatness.
+
+<br><br>
+
+🎉 Have the most amazing birthday ever! 🎉
+
+</div>
+
+</div>
+
+<script>
+
+const gift=document.getElementById("gift");
+const count=document.getElementById("count");
+const wish=document.getElementById("wish");
+const msg=document.getElementById("msg");
+
+gift.onclick=()=>{
+
+gift.style.display="none";
+count.style.display="block";
+
+let n=3;
+
+let timer=setInterval(()=>{
+
+n--;
+
+if(n>0){
+count.innerHTML=n;
+}
+
+if(n===0){
+
+clearInterval(timer);
+
+count.style.display="none";
+
+wish.style.display="block";
+msg.style.display="block";
+
+balloons();
+hearts();
+
+setInterval(fireworks,300);
+
+}
+
+},1000);
+
+};
+
+function balloons(){
+
+for(let i=0;i<40;i++){
+
+let b=document.createElement("div");
+
+b.className="balloon";
+
+b.innerHTML=["🎈","🎈","🎈"][Math.floor(Math.random()*3)];
+
+b.style.left=Math.random()*100+"vw";
+
+b.style.animationDuration=
+(5+Math.random()*8)+"s";
+
+document.body.appendChild(b);
+
+}
+
+}
+
+function hearts(){
+
+setInterval(()=>{
+
+let h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML="💖";
+
+h.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),8000);
+
+},250);
+
+}
+
+function fireworks(){
+
+let f=document.createElement("div");
+
+f.className="firework";
+
+f.style.left=Math.random()*100+"vw";
+
+f.style.top=Math.random()*70+"vh";
+
+f.style.background=
+`hsl(${Math.random()*360},100%,50%)`;
+
+document.body.appendChild(f);
+
+setTimeout(()=>f.remove(),1200);
+
+}
+
+</script>
+
+</body>
+</html>
